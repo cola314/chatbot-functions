@@ -6,4 +6,7 @@ functions:
     lang: python3-flask
     handler: ./call-name
     image: ${DOCKER_USERNAME}/chatbot-functions-call-name:latest
-
+  git-webhook-alert:
+    lang: python3-http
+    handler: ./git-webhook-alert
+    image: ${DOCKER_USERNAME}/chatbot-functions-git-webhook-alert:latest

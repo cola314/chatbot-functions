@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        function-list:  [ "call-name" ]
+        function-list:  [ "call-name", "git-webhook-alert" ]
     steps:
       - 
         name: Checkout
