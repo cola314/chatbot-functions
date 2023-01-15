@@ -7,6 +7,9 @@ on:
 jobs:
   func-build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        function-list:  [ "call-name" ]
     steps:
       - 
         name: Checkout
@@ -47,11 +50,11 @@ jobs:
         name: Build and Push the OpenFaaS function
         uses: docker/build-push-action@v2
         with:
-          context: ./build/call-name/
-          file: ./build/call-name/Dockerfile
+          context: ./build/${{ matrix.function-list }}/
+          file: ./build/${{ matrix.function-list }}/Dockerfile
           push: true
           platforms: linux/amd64,linux/arm64
-          tags: ${{ secrets.DOCKER_USERNAME }}/chatbot-functions-call-name:latest-${{ steps.define_env.outputs.github-sha-short }}
+          tags: ${{ secrets.DOCKER_USERNAME }}/chatbot-functions-${{ matrix.function-list }}:latest-${{ steps.define_env.outputs.github-sha-short }}
       - 
         name: Deploy the function
         uses: docker://openfaas/faas-cli:latest-root
