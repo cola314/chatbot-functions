@@ -17,9 +17,12 @@ else:
     print(result.stderr.decode())
 
 # Run
-run_command = 'python3 ./build/' + target_function + '/index.py'
-result = subprocess.run(run_command, shell=True, capture_output=True)
-if result.returncode == 0:
-    print(result.stdout.decode())
-else:
-    print(result.stderr.decode())
+run_command = ['python3', './build/' + target_function + '/index.py']
+p = subprocess.Popen(run_command,
+                     stdout=subprocess.PIPE,
+                     stderr=subprocess.STDOUT,
+                     universal_newlines=True)
+                     
+while p.poll() == None:
+	out = p.stdout.readline()
+	print(out, end='')
